@@ -139,3 +139,4 @@ function generateHexCode() {
 // Starting Conditions
 displayHexCode();
 displayColor();
+ 
