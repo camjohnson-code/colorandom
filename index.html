@@ -10,56 +10,67 @@
     
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <h1>COLORANDOM</h1>
+    <body>
+      <div class="left-side">
+        <h1>COLORANDOM</h1>
 
-    <section class="color-palette">
-      <container>
-        <div class="color-box" id="box1">
-          <img class="locked-icon hidden" src="assets/locked.png">
-          <img class="unlocked-icon" src="assets/unlocked.png">
+        <section class="color-palette">
+          <container>
+            <div class="color-box" id="box1">
+              <img class="locked-icon hidden" src="assets/locked.png">
+              <img class="unlocked-icon" src="assets/unlocked.png">
+            </div>
+            <p class="hex-code">#EA9999</p>
+          </container>
+          
+          <container>
+            <div class="color-box" id="box2">
+              <img class="locked-icon hidden" src="assets/locked.png">
+              <img class="unlocked-icon" src="assets/unlocked.png">
+            </div>
+            <p class="hex-code">#FACB9C</p>
+          </container>
+          
+          <container>
+            <div class="color-box" id="box3">
+              <img class="locked-icon hidden" src="assets/locked.png">
+              <img class="unlocked-icon" src="assets/unlocked.png">
+            </div>
+            <p class="hex-code">#FFE59A</p>
+          </container>
+          
+          <container>
+            <div class="color-box" id="box4">
+              <img class="locked-icon hidden" src="assets/locked.png">
+              <img class="unlocked-icon" src="assets/unlocked.png">
+            </div>
+            <p class="hex-code">#B6D7A8</p>
+          </container>
+          
+          <container>
+            <div class="color-box" id="box5">
+              <img class="locked-icon hidden" src="assets/locked.png">
+              <img class="unlocked-icon" src="assets/unlocked.png">
+            </div>
+            <p class="hex-code">#A4C4CA</p>
+          </container>
+        </section>
+        
+        <div class="buttons">
+          <button class="new-palette-button">New Palette</button>
+          <button class="save-palette-button">Save Palette</button>
         </div>
-        <p class="hex-code">#EA9999</p>
-      </container>
-      
-      <container>
-        <div class="color-box" id="box2">
-          <img class="locked-icon hidden" src="assets/locked.png">
-          <img class="unlocked-icon" src="assets/unlocked.png">
-        </div>
-        <p class="hex-code">#FACB9C</p>
-      </container>
-      
-      <!-- Add locked/unlocked icons and classes for the other boxes -->
-      <container>
-        <div class="color-box" id="box3">
-          <img class="locked-icon hidden" src="assets/locked.png">
-          <img class="unlocked-icon" src="assets/unlocked.png">
-        </div>
-        <p class="hex-code">#FFE59A</p>
-      </container>
-      
-      <container>
-        <div class="color-box" id="box4">
-          <img class="locked-icon hidden" src="assets/locked.png">
-          <img class="unlocked-icon" src="assets/unlocked.png">
-        </div>
-        <p class="hex-code">#B6D7A8</p>
-      </container>
-      
-      <container>
-        <div class="color-box" id="box5">
-          <img class="locked-icon hidden" src="assets/locked.png">
-          <img class="unlocked-icon" src="assets/unlocked.png">
-        </div>
-        <p class="hex-code">#A4C4CA</p>
-      </container>
-    </section>
+      </div>
 
-    <button class="new-palette-button">
-      New Palette
-    </button>
+      <aside class="right-side">
+        <h2>Saved Palettes</h2>
+        <h3 class="no-saved-palette-message">No saved palettes yet!</h3>
+        <section class="saved-palettes">
+        </section>
+      </aside>
+
   </body>
   <script src="data.js"></script>
   <script src="main.js"></script>
 </html>
+ 

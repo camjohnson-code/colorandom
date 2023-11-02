@@ -6,14 +6,11 @@ var paragraphsToChange = document.querySelectorAll(".hex-code");
 var boxesToChange = document.querySelectorAll(".color-box");
 var lockedIcon = document.querySelector(".locked-icon");
 var unlockedIcon = document.querySelector(".unlocked-icon");
-var colorBox = document.querySelectorAll(
-  ".box-1, .box-2, .box-3, .box-4, .box-5"
-);
-var box1 = document.querySelector('#box1')
-var box2 = document.querySelector('#box2')
-var box3 = document.querySelector('#box3')
-var box4 = document.querySelector('#box4')
-var box5 = document.querySelector('#box5')
+var colorBox = document.querySelectorAll(".box-1, .box-2, .box-3, .box-4, .box-5");
+var savePaletteButton = document.querySelector('.save-palette-button');
+var noSavedPaletteMessage = document.querySelector(".no-saved-palette-message");
+var savedPalettesSection = document.querySelector('.saved-palettes');
+
 
 //Event Listeners
 body.addEventListener('click', function(event) {
@@ -23,6 +20,8 @@ body.addEventListener('click', function(event) {
   }
 
   toggleLock();
+  savePalette();
+  displaySavedPalette();
 });
 
 //Event Handlers and Functions
@@ -35,28 +34,58 @@ function toggleLock() {
     var parentContainer = event.target.closest('container');
 
     if (parentContainer) {
-        var lockedIcon = parentContainer.querySelector('.locked-icon');
-        var unlockedIcon = parentContainer.querySelector('.unlocked-icon');
-        var colorSwatch = parentContainer.querySelector('div')
+      var lockedIcon = parentContainer.querySelector('.locked-icon');
+      var unlockedIcon = parentContainer.querySelector('.unlocked-icon');
+      var colorSwatch = parentContainer.querySelector('div')
         
-        colorSwatch.classList.add('locked');
-        lockedIcon.classList.remove('hidden');
-        unlockedIcon.classList.add('hidden');
+      colorSwatch.classList.add('locked');
+      lockedIcon.classList.remove('hidden');
+      unlockedIcon.classList.add('hidden');
     }
-}
+  }
 
-if (event.target.classList.contains('locked-icon')) {
+  if (event.target.classList.contains('locked-icon')) {
     var parentContainer = event.target.closest('container');
     if (parentContainer) {
-        var lockedIcon = parentContainer.querySelector('.locked-icon');
-        var unlockedIcon = parentContainer.querySelector('.unlocked-icon');
-        var colorSwatch = parentContainer.querySelector('div')
-        
-        colorSwatch.classList.remove('locked')
-        lockedIcon.classList.add('hidden');
-        unlockedIcon.classList.remove('hidden');
+      var lockedIcon = parentContainer.querySelector('.locked-icon');
+      var unlockedIcon = parentContainer.querySelector('.unlocked-icon');
+      var colorSwatch = parentContainer.querySelector('div')
+          
+      colorSwatch.classList.remove('locked')
+      lockedIcon.classList.add('hidden');
+      unlockedIcon.classList.remove('hidden');
     }
+  }
 }
+
+function savePalette() {
+  if (event.target.classList.contains('save-palette-button')){
+    savedPalettes.push(currentPalette);
+  }
+}
+
+function displaySavedPalette() {
+  if (event.target.classList.contains('save-palette-button')){
+    noSavedPaletteMessage.classList.add('hidden');
+
+    // create container
+    var paletteContainer = document.createElement('container');
+
+    for (var i = 0; i < savedPalettes.length; i++) {
+      var individualPalette = savedPalettes[i]
+      paletteContainer.innerHTML = "";
+
+      for (var j = 0; j < individualPalette.length; j++) {
+        var colorBox = document.createElement('div');
+        colorBox.style.backgroundColor = individualPalette[j];
+        colorBox.classList.add('savedSwatch');
+        paletteContainer.appendChild(colorBox);
+      }
+    }
+
+    // append containers to section
+    savedPalettesSection.appendChild(paletteContainer);
+  }
 }
 
 function displayHexCode() {
@@ -110,3 +139,4 @@ function generateHexCode() {
 // Starting Conditions
 displayHexCode();
 displayColor();
+ 
