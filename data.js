@@ -1,2 +1,3 @@
 var currentPalette = [];
 
+var savedPalettes = [];
