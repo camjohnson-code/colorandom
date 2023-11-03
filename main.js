@@ -11,7 +11,6 @@ var savePaletteButton = document.querySelector('.save-palette-button');
 var noSavedPaletteMessage = document.querySelector(".no-saved-palette-message");
 var savedPalettesSection = document.querySelector('.saved-palettes');
 
-
 //Event Listeners
 body.addEventListener('click', function(event) {
   if (event.target.className === 'new-palette-button') {
@@ -24,9 +23,28 @@ body.addEventListener('click', function(event) {
   displaySavedPalette();
 });
 
+savedPalettesSection.addEventListener('click', function(event) {
+  deletePalette();
+})
+
 //Event Handlers and Functions
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
+}
+
+function deletePalette() {
+  if (event.target.classList.contains('delete-button')) {
+    var paletteContainer = event.target.closest('container');
+    
+    var index = Array.from(savedPalettesSection.children).indexOf(paletteContainer);
+    savedPalettes.splice(index, 1);
+    
+    paletteContainer.remove();
+  }
+
+  if (!savedPalettesSection.childElementCount) {
+    noSavedPaletteMessage.classList.remove('hidden');
+  }
 }
 
 function toggleLock() {
@@ -81,7 +99,14 @@ function displaySavedPalette() {
         colorBox.classList.add('savedSwatch');
         paletteContainer.appendChild(colorBox);
       }
+
+      var deleteBtn = document.createElement('img');
+      deleteBtn.src = 'assets/delete.png'
+      deleteBtn.classList.add('delete-button');
+      paletteContainer.appendChild(deleteBtn);
     }
+
+    
 
     // append containers to section
     savedPalettesSection.appendChild(paletteContainer);
