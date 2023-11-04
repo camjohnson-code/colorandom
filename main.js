@@ -10,26 +10,54 @@ var colorBox = document.querySelectorAll(".box-1, .box-2, .box-3, .box-4, .box-5
 var savePaletteButton = document.querySelector('.save-palette-button');
 var noSavedPaletteMessage = document.querySelector(".no-saved-palette-message");
 var savedPalettesSection = document.querySelector('.saved-palettes');
+var images = document.querySelectorAll('img');
 
 //Event Listeners
 body.addEventListener('click', function(event) {
-  if (event.target.className === 'new-palette-button') {
-      displayHexCode();
-      displayColor();
-  }
-
-  toggleLock();
+  generateNewColors();
   savePalette();
   displaySavedPalette();
 });
 
+colorPaletteSection.addEventListener('click', toggleLock);
+
 savedPalettesSection.addEventListener('click', function(event) {
   deletePalette();
+  editPalette();
 })
 
 //Event Handlers and Functions
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
+}
+
+function generateNewColors() {
+  if (event.target.className === 'new-palette-button') {
+    displayHexCode();
+    displayColor();
+  }
+}
+
+function editPalette() {
+  if (event.target.classList.contains('saved-swatch')) {
+    currentPalette = [];
+    var container = event.target.closest('container');
+    var index = Array.from(savedPalettesSection.children).indexOf(container);
+
+    for (var i = 0; i < 5; i++) {
+        boxesToChange[i].style.backgroundColor = `${savedPalettes[index][i]}`;
+        paragraphsToChange[i].innerText = `${savedPalettes[index][i]}`;
+        currentPalette.push(savedPalettes[index][i]);
+    }
+
+    for (var i = 0; i < images.length; i++) {
+      if (images[i].classList.contains('locked-icon')) {
+        images[i].classList.add('hidden');
+      } else {
+        images[i].classList.remove('hidden');
+      }
+    }
+  }
 }
 
 function deletePalette() {
@@ -86,17 +114,16 @@ function displaySavedPalette() {
   if (event.target.classList.contains('save-palette-button')){
     noSavedPaletteMessage.classList.add('hidden');
 
-    // create container
     var paletteContainer = document.createElement('container');
 
     for (var i = 0; i < savedPalettes.length; i++) {
-      var individualPalette = savedPalettes[i]
+      var individualPalette = savedPalettes[i];
       paletteContainer.innerHTML = "";
 
       for (var j = 0; j < individualPalette.length; j++) {
         var colorBox = document.createElement('div');
         colorBox.style.backgroundColor = individualPalette[j];
-        colorBox.classList.add('savedSwatch');
+        colorBox.classList.add('saved-swatch');
         paletteContainer.appendChild(colorBox);
       }
 
@@ -106,9 +133,6 @@ function displaySavedPalette() {
       paletteContainer.appendChild(deleteBtn);
     }
 
-    
-
-    // append containers to section
     savedPalettesSection.appendChild(paletteContainer);
   }
 }
@@ -134,24 +158,7 @@ function displayColor() {
 }
 
 function generateHexCode() {
-  var hexConditions = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-  ];
+  var hexConditions = ["A", "B", "C", "D", "E", "F", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
   var hexColor = ["#"];
 
   for (var i = 0; i < 6; i++) {
