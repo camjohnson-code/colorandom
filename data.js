@@ -1,3 +1,3 @@
-var currentPalette = []; 
+var currentPalette = [];
 
-var savedPalettes = [];
+var savedPalettes = JSON.parse(localStorage.getItem('savedPalette')) || [];

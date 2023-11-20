@@ -1,53 +1,154 @@
-//DOM Elements
-var newPaletteButton = document.querySelector(".new-palette-button");
-var colorPaletteSection = document.querySelector(".color-palette");
-var body = document.querySelector("body");
-var paragraphsToChange = document.querySelectorAll(".hex-code");
-var boxesToChange = document.querySelectorAll(".color-box");
-var lockedIcon = document.querySelector(".locked-icon");
-var unlockedIcon = document.querySelector(".unlocked-icon");
-var colorBox = document.querySelectorAll(".box-1, .box-2, .box-3, .box-4, .box-5");
-var savePaletteButton = document.querySelector('.save-palette-button');
-var noSavedPaletteMessage = document.querySelector(".no-saved-palette-message");
-var savedPalettesSection = document.querySelector('.saved-palettes');
+// EVENT HANDLERS
 var images = document.querySelectorAll('img');
+var leftSide = document.querySelector('.left-side');
+var boxesToChange = document.querySelectorAll('.individual-color');
+var hexCodes = document.querySelectorAll('.hex-code');
+var onScreenPalette = document.querySelector('.current-palette');
+var savedPalettesSection = document.querySelector('.saved-palettes-section');
+var noSavedPaletteMessage = document.getElementById('no-saved-palettes');
 
-//Event Listeners
-body.addEventListener('click', function(event) {
+// EVENT LISTENERS
+leftSide.addEventListener('click', function (event) {
   generateNewColors();
   savePalette();
-  displaySavedPalette();
+  displaySavedPalettes();
 });
 
-colorPaletteSection.addEventListener('click', toggleLock);
+onScreenPalette.addEventListener('click', function (event) {
+  toggleLock();
+});
 
-savedPalettesSection.addEventListener('click', function(event) {
-  deletePalette();
-  editPalette();
-})
+savedPalettesSection.addEventListener('click', function (event) {
+  deleteSavedPalette();
+  editSavedPalette();
+});
 
-//Event Handlers and Functions
-function getRandomIndex(array) {
-  return Math.floor(Math.random() * array.length);
+// FUNCTIONS
+function getRandomNumber(arr) {
+  return Math.floor(Math.random() * arr.length);
 }
 
-function generateNewColors() {
-  if (event.target.className === 'new-palette-button') {
-    displayHexCode();
-    displayColor();
+function generateHexCode() {
+  var hexCharacters = 'ABCDEF0123456789';
+  var hexElements = [...hexCharacters];
+  var hexCode = ['#'];
+
+  for (i = 0; i <= 5; i++) {
+    hexCode.push(hexElements[getRandomNumber(hexElements)]);
+  }
+  return hexCode.join('');
+}
+
+function displayHexCode() {
+  currentPalette = [];
+
+  for (var i = 0; i < hexCodes.length; i++) {
+    if (!boxesToChange[i].classList.contains('locked')) hexCodes[i].innerText = generateHexCode();
+    currentPalette.push(hexCodes[i].innerText);
   }
 }
 
-function editPalette() {
+function displayColors() {
+  for (var i = 0; i < boxesToChange.length; i++) {
+    if (!boxesToChange[i].classList.contains('locked'))
+      boxesToChange[i].style.backgroundColor = `${currentPalette[i]}`;
+  }
+}
+
+function generateNewColors() {
+  if (event.target.classList.contains('new-palette-button')) displayHexCode(), displayColors();
+}
+
+function toggleLock() {
+  var parentContainer = event.target.closest('container');
+  var lockedIcon = parentContainer.querySelector('.locked-icon');
+  var unlockedIcon = parentContainer.querySelector('.unlocked-icon');
+  var colorSwatch = parentContainer.querySelector('div');
+
+  if (event.target.classList.contains('unlocked-icon'))
+    colorSwatch.classList.add('locked'),
+      lockedIcon.classList.remove('hidden'),
+      unlockedIcon.classList.add('hidden');
+
+  if (event.target.classList.contains('locked-icon'))
+    colorSwatch.classList.remove('locked'),
+      lockedIcon.classList.add('hidden'),
+      unlockedIcon.classList.remove('hidden');
+}
+
+function addToLocalStorage() {
+  var existingPalettes = JSON.parse(localStorage.getItem('savedPalette')) || [];
+  existingPalettes.push(currentPalette);
+  localStorage.setItem('savedPalette', JSON.stringify(existingPalettes));
+}
+
+function savePalette() {
+  if (event.target.classList.contains('save-palette-button')) {
+    savedPalettes.push(currentPalette);
+    addToLocalStorage();
+  }
+}
+
+function displaySavedPalettes() {
+  savedPalettesSection.innerHTML = '';
+
+  if (savedPalettes.length === 0) {
+    noSavedPaletteMessage.classList.remove('hidden');
+  } else {
+    noSavedPaletteMessage.classList.add('hidden');
+  }
+
+  for (var i = 0; i < savedPalettes.length; i++) {
+    var individualPalette = savedPalettes[i];
+    var paletteContainer = document.createElement('container');
+
+    for (var j = 0; j < individualPalette.length; j++) {
+      var colorBox = document.createElement('div');
+      colorBox.style.backgroundColor = individualPalette[j];
+      colorBox.classList.add('saved-swatch');
+      paletteContainer.appendChild(colorBox);
+    }
+
+    var deleteImg = document.createElement('img');
+    deleteImg.src = 'assets/delete.png';
+    deleteImg.classList.add('delete-button');
+    paletteContainer.appendChild(deleteImg);
+    savedPalettesSection.appendChild(paletteContainer);
+  }
+}
+
+function updateLocalStorage() {
+  localStorage.setItem('savedPalette', JSON.stringify(savedPalettes));
+}
+
+function deleteSavedPalette() {
+  if (event.target.classList.contains('delete-button')) {
+    var paletteContainer = event.target.closest('container');
+    var index = Array.from(savedPalettesSection.children).indexOf(paletteContainer);
+
+    savedPalettes.splice(index, 1);
+    paletteContainer.remove();
+
+    updateLocalStorage();
+
+    if (savedPalettes.length === 0) {
+      noSavedPaletteMessage.classList.remove('hidden');
+    }
+  }
+
+  if (!savedPalettes.length) noSavedPaletteMessage.classList.remove('hidden');
+}
+
+function editSavedPalette() {
   if (event.target.classList.contains('saved-swatch')) {
     currentPalette = [];
     var container = event.target.closest('container');
     var index = Array.from(savedPalettesSection.children).indexOf(container);
 
     for (var i = 0; i < 5; i++) {
-        boxesToChange[i].style.backgroundColor = `${savedPalettes[index][i]}`;
-        paragraphsToChange[i].innerText = `${savedPalettes[index][i]}`;
-        currentPalette.push(savedPalettes[index][i]);
+      boxesToChange[i].style.backgroundColor = `${savedPalettes[index][i]}`;
+      hexCodes[i].innerText = `${savedPalettes[index][i]}`;
+      currentPalette.push(savedPalettes[index][i]);
     }
 
     for (var i = 0; i < images.length; i++) {
@@ -60,115 +161,9 @@ function editPalette() {
   }
 }
 
-function deletePalette() {
-  if (event.target.classList.contains('delete-button')) {
-    var paletteContainer = event.target.closest('container');
-    
-    var index = Array.from(savedPalettesSection.children).indexOf(paletteContainer);
-    savedPalettes.splice(index, 1);
-    
-    paletteContainer.remove();
-  }
-
-  if (!savedPalettesSection.childElementCount) {
-    noSavedPaletteMessage.classList.remove('hidden');
-  }
-}
-
-function toggleLock() {
-  if (event.target.classList.contains('unlocked-icon')) {
-    var parentContainer = event.target.closest('container');
-
-    if (parentContainer) {
-      var lockedIcon = parentContainer.querySelector('.locked-icon');
-      var unlockedIcon = parentContainer.querySelector('.unlocked-icon');
-      var colorSwatch = parentContainer.querySelector('div')
-        
-      colorSwatch.classList.add('locked');
-      lockedIcon.classList.remove('hidden');
-      unlockedIcon.classList.add('hidden');
-    }
-  }
-
-  if (event.target.classList.contains('locked-icon')) {
-    var parentContainer = event.target.closest('container');
-    if (parentContainer) {
-      var lockedIcon = parentContainer.querySelector('.locked-icon');
-      var unlockedIcon = parentContainer.querySelector('.unlocked-icon');
-      var colorSwatch = parentContainer.querySelector('div')
-          
-      colorSwatch.classList.remove('locked')
-      lockedIcon.classList.add('hidden');
-      unlockedIcon.classList.remove('hidden');
-    }
-  }
-}
-
-function savePalette() {
-  if (event.target.classList.contains('save-palette-button')){
-    savedPalettes.push(currentPalette);
-  }
-}
-
-function displaySavedPalette() {
-  if (event.target.classList.contains('save-palette-button')){
-    noSavedPaletteMessage.classList.add('hidden');
-
-    var paletteContainer = document.createElement('container');
-
-    for (var i = 0; i < savedPalettes.length; i++) {
-      var individualPalette = savedPalettes[i];
-      paletteContainer.innerHTML = "";
-
-      for (var j = 0; j < individualPalette.length; j++) {
-        var colorBox = document.createElement('div');
-        colorBox.style.backgroundColor = individualPalette[j];
-        colorBox.classList.add('saved-swatch');
-        paletteContainer.appendChild(colorBox);
-      }
-
-      var deleteBtn = document.createElement('img');
-      deleteBtn.src = 'assets/delete.png'
-      deleteBtn.classList.add('delete-button');
-      paletteContainer.appendChild(deleteBtn);
-    }
-
-    savedPalettesSection.appendChild(paletteContainer);
-  }
-}
-
-function displayHexCode() {
-  currentPalette = [];
-
-  for (var i = 0; i < paragraphsToChange.length; i++) {
-    if (!boxesToChange[i].classList.contains("locked")) {
-      paragraphsToChange[i].innerText = generateHexCode();
-    }
-
-    currentPalette.push(paragraphsToChange[i].innerText);
-  }
-}
-
-function displayColor() {
-  for (var i = 0; i < boxesToChange.length; i++) {
-    if (!boxesToChange[i].classList.contains("locked")) {
-      boxesToChange[i].style.backgroundColor = `${paragraphsToChange[i].innerText}`;
-    }
-  }
-}
-
-function generateHexCode() {
-  var hexConditions = ["A", "B", "C", "D", "E", "F", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  var hexColor = ["#"];
-
-  for (var i = 0; i < 6; i++) {
-    hexColor.push(hexConditions[getRandomIndex(hexConditions)]);
-  }
-
-  return hexColor.join("");
-}
-
-// Starting Conditions
-displayHexCode();
-displayColor();
- 
+// STARTING CONDITIONS
+document.addEventListener('DOMContentLoaded', function () {
+  displayHexCode();
+  displayColors();
+  displaySavedPalettes();
+});

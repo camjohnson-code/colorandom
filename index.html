@@ -3,73 +3,76 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Colorandom</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
+    <title>Colorandom</title>
   </head>
-    <body>
-      <div class="left-side">
-        <h1>COLORANDOM</h1>
+  <body>
+    <section class="left-side">
+      <h1>COLORANDOM</h1>
 
-        <section class="color-palette">
-          <container class="container">
-            <div class="color-box" id="box1">
-              <img class="locked-icon hidden" src="assets/locked.png">
-              <img class="unlocked-icon" src="assets/unlocked.png">
+      <main>
+        <section class="current-palette">
+          <container class="color-swatch">
+            <div id="box-1" class="individual-color">
+                <img src="assets/unlocked.png" alt="unlocked icon" class="unlocked-icon">
+                <img src="assets/locked.png" alt="unlocked icon" class="locked-icon hidden">
             </div>
             <p class="hex-code">#EA9999</p>
           </container>
-          
-          <container class='container'>
-            <div class="color-box" id="box2">
-              <img class="locked-icon hidden" src="assets/locked.png">
-              <img class="unlocked-icon" src="assets/unlocked.png">
+
+          <container class="color-swatch">
+            <div id="box-2" class="individual-color">
+                <img src="assets/unlocked.png" alt="unlocked icon" class="unlocked-icon">
+                <img src="assets/locked.png" alt="unlocked icon" class="locked-icon hidden">
             </div>
             <p class="hex-code">#FACB9C</p>
           </container>
-          
-          <container class='container'>
-            <div class="color-box" id="box3">
-              <img class="locked-icon hidden" src="assets/locked.png">
-              <img class="unlocked-icon" src="assets/unlocked.png">
+
+          <container class="color-swatch">
+            <div id="box-3" class="individual-color">
+                <img src="assets/unlocked.png" alt="unlocked icon" class="unlocked-icon">
+                <img src="assets/locked.png" alt="unlocked icon" class="locked-icon hidden">
             </div>
-            <p class="hex-code">#FFE59A</p>
+            <p class="hex-code">#FFE95A</p>
           </container>
-          
-          <container class='container'>
-            <div class="color-box" id="box4">
-              <img class="locked-icon hidden" src="assets/locked.png">
-              <img class="unlocked-icon" src="assets/unlocked.png">
+
+          <container class="color-swatch">
+            <div id="box-4" class="individual-color">
+                <img src="assets/unlocked.png" alt="unlocked icon" class="unlocked-icon">
+                <img src="assets/locked.png" alt="unlocked icon" class="locked-icon hidden">
             </div>
             <p class="hex-code">#B6D7A8</p>
           </container>
-          
-          <container class='container'>
-            <div class="color-box" id="box5">
-              <img class="locked-icon hidden" src="assets/locked.png">
-              <img class="unlocked-icon" src="assets/unlocked.png">
+
+          <container class="color-swatch">
+            <div id="box-5" class="individual-color">
+                <img src="assets/unlocked.png" alt="unlocked icon" class="unlocked-icon">
+                <img src="assets/locked.png" alt="unlocked icon" class="locked-icon hidden">
             </div>
             <p class="hex-code">#A4C4CA</p>
           </container>
         </section>
-        
-        <div class="buttons">
-          <button class="new-palette-button">New Palette</button>
-          <button class="save-palette-button">Save Palette</button>
-        </div>
-      </div>
 
-      <aside class="right-side">
-        <h2>Saved Palettes</h2>
-        <h3 class="no-saved-palette-message">No saved palettes yet!</h3>
-        <section class="saved-palettes">
-        </section>
-      </aside>
+        <container class="button-holder">
+            <button class="new-palette-button">NEW PALETTE</button>
+            <button class="save-palette-button">SAVE PALETTE</button>
+        </container>
+       
+      </main>
+    </section>
 
+    <section class="right-side">
+        <h3>Saved Palettes</h3>
+        <p id="no-saved-palettes">No saved palettes yet!</p>
+        <section class="saved-palettes-section"></section>
+    </section>
   </body>
   <script src="data.js"></script>
   <script src="main.js"></script>
-</html>
+</html> 
