@@ -1,6 +1,6 @@
 # colorandom
 
-Welcome to Colorandom, a simple web app that generates random color palettes for your creative projects. This project allows you to explore and save unique color combinations effortlessly. The design and rubric was assigned to me as part of a group project at [Turing School of Software and Design](https://frontend.turing.edu/projects/module-1/colorandom.html). After completing it with the group, however, I decided to go through and tackle this on my own.
+Welcome to Colorandom, a simple web app that generates random color palettes for your creative projects. This project allows you to explore and save unique color combinations effortlessly. The design and rubric was assigned to me as part of a group project at [Turing School of Software and Design](https://frontend.turing.edu/projects/module-1/colorandom.html). After completing it with the group, I decided to go through and refactor and add a feature on my own.
 
 ## Features
 Dynamic Color Generation: Click the "NEW PALETTE" button to generate a new set of random colors.
@@ -28,7 +28,6 @@ There are several feature I'd like to add moving forward. These include:
 
 - Ensuring that all saved palettes are unique.
 - When a user tries to delete a saved palette, have them confirm that they really do want to delete it.
-- ~~Implement localStorage so the saved palettes persist on page load.~~
 - Allow users to name their palettes when saving.
 - Allow users to name their palettes when saving, and allow them to search their saved palettes by name.
 - Create a way for users to adjust a color.
